@@ -1,6 +1,7 @@
+/* eslint-disable */
 import React from 'react';
-import { Link, useRouteMatch, Route } from "react-router-dom";
-import SinglePage from "./SinglePage";
+import { Link, useRouteMatch, Route } from 'react-router-dom';
+import SinglePage from './SinglePage';
 
 const About = () => {
   const { url, path } = useRouteMatch();
@@ -19,6 +20,7 @@ const About = () => {
       </Route>
     </div>
   );
-}
+};
 
 export default About;
+/* eslint-enable */
