@@ -71,42 +71,40 @@ class TodoContainer extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevState) {
     if(prevState.todos !== this.state.todos) {
       const temp = JSON.stringify(this.state.todos)
       localStorage.setItem('todos', temp)
     }
   }
 
-  componentWillUnmount() {
-    console.log('Cleaning up...')
-  }
-
   render() {
     return (
-      <Switch>
+      <>
         <Navbar />
-        <Route exact path="http://localhost:3000/">
-          <div className="container">
-            <div className="inner">
-              <Header />
-              <InputTodo addTodoProps={this.addTodoItem} />
-              <TodosList
-                todos={this.state.todos}
-                handleChangeProps={this.handleChange}
-                deleteTodoProps={this.delTodo}
-                setUpdate={this.setUpdate}
-              />
+        <Switch>
+          <Route exact path="/home">
+            <div className="container">
+              <div className="inner">
+                <Header />
+                <InputTodo addTodoProps={this.addTodoItem} />
+                <TodosList
+                  todos={this.state.todos}
+                  handleChangeProps={this.handleChange}
+                  deleteTodoProps={this.delTodo}
+                  setUpdate={this.setUpdate}
+                />
+              </div>
             </div>
-          </div>
-        </Route>
-        <Route path="/about">
-          <About />
-        </Route>
-        <Route path="*">
-          <NotMatch />
-        </Route>
-      </Switch>
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="*">
+            <NotMatch />
+          </Route>
+        </Switch>
+      </>
     );
   }
 }
