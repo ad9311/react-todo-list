@@ -1,8 +1,12 @@
 import React from 'react';
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
+import { Route, Switch } from "react-router-dom";
+import Navbar from './Navbar';
 import TodosList from './TodosList';
-import Header from "./Header";
-import InputTodo from "./InputTodo";
+import Header from './Header';
+import InputTodo from './InputTodo';
+import About from '../pages/About';
+import NotMatch from '../pages/NoMatch';
 
 class TodoContainer extends React.Component {
   state = {
@@ -58,7 +62,7 @@ class TodoContainer extends React.Component {
   };
 
   componentDidMount() {
-    const temp = localStorage.getItem("todos")
+    const temp = localStorage.getItem('todos')
     const loadedTodos = JSON.parse(temp)
     if (loadedTodos) {
       this.setState({
@@ -70,28 +74,39 @@ class TodoContainer extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if(prevState.todos !== this.state.todos) {
       const temp = JSON.stringify(this.state.todos)
-      localStorage.setItem("todos", temp)
+      localStorage.setItem('todos', temp)
     }
   }
 
   componentWillUnmount() {
-    console.log("Cleaning up...")
+    console.log('Cleaning up...')
   }
 
   render() {
     return (
-      <div className="container">
-        <div className="inner">
-          <Header />
-          <InputTodo addTodoProps={this.addTodoItem} />
-          <TodosList
-            todos={this.state.todos}
-            handleChangeProps={this.handleChange}
-            deleteTodoProps={this.delTodo}
-            setUpdate={this.setUpdate}
-          />
-        </div>
-      </div>
+      <Switch>
+        <Navbar />
+        <Route exact path="http://localhost:3000/">
+          <div className="container">
+            <div className="inner">
+              <Header />
+              <InputTodo addTodoProps={this.addTodoItem} />
+              <TodosList
+                todos={this.state.todos}
+                handleChangeProps={this.handleChange}
+                deleteTodoProps={this.delTodo}
+                setUpdate={this.setUpdate}
+              />
+            </div>
+          </div>
+        </Route>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="*">
+          <NotMatch />
+        </Route>
+      </Switch>
     );
   }
 }
